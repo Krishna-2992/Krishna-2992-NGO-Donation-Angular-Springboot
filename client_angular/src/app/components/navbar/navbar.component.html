@@ -1,0 +1,30 @@
+<div class="navbar">
+  <h1>NGO Donation</h1>
+  <div>
+    <!-- User not logged In -->
+    @if(user().name === '') {
+    <div class="buttons">
+      <a routerLink="/" routerLinkActive="active" class="button">Home</a>
+
+      <a routerLink="/login" routerLinkActive="active" class="button">Login</a>
+      <a routerLink="/register" routerLinkActive="active" class="button"
+        >Register</a
+      >
+    </div>
+    }
+
+    <!-- User Logged In -->
+    @if(user().name !== '') {
+    <div class="buttons">
+      <a routerLink="/" routerLinkActive="active" class="button">Home</a>
+      <a routerLink="/donations" routerLinkActive="active" class="button"
+        >Donations</a
+      >
+      <a (click)="logOut()" class="button">Logout</a>
+      <div>
+        {{ user().name }}
+      </div>
+    </div>
+    }
+  </div>
+</div>

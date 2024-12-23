@@ -1,0 +1,27 @@
+.navbar {
+    display: flex;
+    background-color: #fff;
+    justify-content: space-around;
+    align-items: center;
+    height: 10vh;
+}
+.buttons {
+    display: flex; 
+    justify-content: space-around;
+    align-items: center;
+    padding: 8px; 
+}
+.button {
+    background: transparent;
+    color: #FF6B6B;
+    margin: 8px;
+    padding: 0.5rem 1.5rem;
+    border: 2px solid #FF6B6B;
+    border-radius: 25px;
+    font-weight: 500;
+    transition: all 0.3s;
+    text-decoration: none;
+}
+.button:hover {
+    background: #FFE3E3;
+}

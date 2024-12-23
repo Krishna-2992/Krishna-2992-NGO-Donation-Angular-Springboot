@@ -1,0 +1,13 @@
+CREATE TABLE `users` (
+   `user_id` int NOT NULL AUTO_INCREMENT,
+   `address` varchar(255) DEFAULT NULL,
+   `email` varchar(255) DEFAULT NULL,
+   `login_name` varchar(50) NOT NULL,
+   `name` varchar(100) NOT NULL,
+   `pan_number` varchar(255) DEFAULT NULL,
+   `password` varchar(255) NOT NULL,
+   `phone` varchar(255) DEFAULT NULL,
+   `role` varchar(255) NOT NULL,
+   PRIMARY KEY (`user_id`),
+   UNIQUE KEY `UKh1ic89iqbkwfexq4ox9gfdnlp` (`login_name`)
+ )

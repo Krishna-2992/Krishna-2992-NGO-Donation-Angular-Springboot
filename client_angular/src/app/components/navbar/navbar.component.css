@@ -4,6 +4,7 @@
     justify-content: space-around;
     align-items: center;
     height: 10vh;
+    color: #ff6b6b
 }
 .buttons {
     display: flex; 

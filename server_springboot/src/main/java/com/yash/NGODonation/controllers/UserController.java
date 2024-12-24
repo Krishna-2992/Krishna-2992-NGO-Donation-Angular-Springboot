@@ -5,10 +5,13 @@ import com.yash.NGODonation.exceptions.UserNotFoundException;
 import com.yash.NGODonation.service.UserService;
 import jakarta.websocket.server.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/users")
@@ -24,20 +27,28 @@ public class UserController {
     }
 
     @PostMapping
-    public UserEntity createNewUser(@RequestBody UserEntity user) {
+    public ResponseEntity<?> createNewUser(@RequestBody UserEntity user) {
         System.out.println("-----user register----");
         System.out.println(user);
         try {
-            return userService.createNewUser(user);
+            UserEntity newUser = userService.createNewUser(user);
+            return ResponseEntity.ok(newUser);
         } catch (SQLIntegrityConstraintViolationException e) {
-            System.out.println(e);
-            return new UserEntity();
+            System.out.println("--------------------------");
+            System.out.println("error::::: " + e);
+            return ResponseEntity
+                    .status(HttpStatus.CONFLICT)
+                    .body("Username already exists");
         }
     }
 
     @GetMapping("/{id}")
-    public UserEntity getUserById(@PathVariable("id") int id) {
-        return userService.getUserById(id);
+    public ResponseEntity<UserEntity> getUserById(@PathVariable("id") int id) {
+        Optional<UserEntity> user = userService.getUserById(id);
+        if(user.isPresent()) {
+            return new ResponseEntity<>(user.get(), HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @DeleteMapping("/{id}")

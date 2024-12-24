@@ -47,16 +47,9 @@ export class UserService {
     })
   }
 
-  registerUser(user: User): void {
-    this.setUserData(user).subscribe({
-      next: (response: void) => {
-        console.log("user registered successfully")
-      }, 
-      error: (error: Error) => {
-        console.log("error: " + JSON.stringify(error))
-      }
-    })
-  }
+  registerUser(user: User): Observable<any> {
+    return this.setUserData(user);
+}
 
   logoutUser(): void {
     localStorage.removeItem('user'); // Removes the user object
@@ -77,19 +70,19 @@ export class UserService {
     return this.http.post<User>('http://localhost:8080/users/login', loginUser , { observe: 'response' });
   }
   
-  setUserData(user: User): Observable<void> {
+  setUserData(user: User): Observable<any> {
     console.log("registered user: ", user) 
-    return this.http.post<void>(`${this.url}`, {
-      name: user.name,
-      phone: user.phone,
-      email: user.email,
-      address: user.address,
-      loginName: user.loginName,
-      password: user.password,
-      role: user.role,
-      panNumber: user.panNumber
+    return this.http.post(`${this.url}`, {
+        name: user.name,
+        phone: user.phone,
+        email: user.email,
+        address: user.address,
+        loginName: user.loginName,
+        password: user.password,
+        role: user.role,
+        panNumber: user.panNumber
     });
-  }
+}
 
   getUser(): User {
     console.log("inside getuser")

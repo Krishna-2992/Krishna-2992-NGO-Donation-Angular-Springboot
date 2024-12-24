@@ -3,6 +3,7 @@ import { User } from '../../interfaces/user';
 import { FormsModule, NgForm } from '@angular/forms';
 import { UserService } from '../../services/user.service';
 import { NgIf } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -24,13 +25,31 @@ export class RegisterComponent {
     panNumber: ''
   }
   submitted = false;
+  errorMessage: string = '';
 
-  constructor(private userService: UserService) {}
+
+  constructor(private userService: UserService, private router: Router) {}
 
   handleRegistration(form: NgForm) {
     this.submitted = true;
-    console.log("registration: ", form)
-    console.log("user: ", this.userService.registerUser(this.user))
+    this.errorMessage = ''; // Reset error message
     
-  }
+    if (form.valid) {
+        this.userService.registerUser(this.user).subscribe({
+            next: (response) => {
+                console.log("Registration successful", response);
+                // Navigate to login or show success message
+                this.router.navigate(['/login']);
+            },
+            error: (error) => {
+                console.error("Registration error:", error);
+                if (error.status === 409) {
+                    this.errorMessage = 'Username already exists. Please choose a different username.';
+                } else {
+                    this.errorMessage = 'Registration failed. Please try again.';
+                }
+            }
+        });
+    }
+}
 }

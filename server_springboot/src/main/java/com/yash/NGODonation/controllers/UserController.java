@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.swing.text.html.Option;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 import java.util.Optional;
@@ -67,13 +68,8 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public UserEntity loginUser(@RequestBody UserEntity user) {
-        System.out.println(user.getLoginName());
-        System.out.println(user.getPassword());
-        System.out.println("inside user login");
-        System.out.println(user);
-        UserEntity loginUser = userService.loginUser(user.getLoginName(), user.getPassword());
-        if(loginUser.getUserId() != 0) return loginUser;
-        else return new UserEntity();
+    public ResponseEntity<UserEntity> loginUser(@RequestBody UserEntity loginUser) {
+        Optional<UserEntity> user = userService.loginUser(loginUser.getLoginName(), loginUser.getPassword());
+        return user.map(userEntity -> new ResponseEntity<>(userEntity, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.UNAUTHORIZED));
     }
 }

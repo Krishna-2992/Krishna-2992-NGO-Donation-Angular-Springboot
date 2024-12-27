@@ -17,6 +17,7 @@ export class NavbarComponent {
   constructor(private userService: UserService){}
 
   ngOnInit() {
+    console.log("navbar ngoninit")
     if(typeof window !== 'undefined' && window.localStorage) {
       const userData = localStorage.getItem("user");
       if (userData) {

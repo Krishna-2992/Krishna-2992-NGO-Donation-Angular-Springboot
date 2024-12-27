@@ -45,9 +45,11 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public UserEntity loginUser(String loginName, String password) {
-        UserEntity user =  userRepository.findByUsernameAndPassword(loginName, password);
-        user.setPassword("*********");
+    public Optional<UserEntity> loginUser(String loginName, String password) {
+        Optional<UserEntity> user =  userRepository.findByUsernameAndPassword(loginName, password);
+        if(user.isPresent()) {
+            user.get().setPassword("*********");
+        }
         return user;
     }
 }

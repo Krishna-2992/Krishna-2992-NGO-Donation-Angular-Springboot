@@ -69,3 +69,18 @@ button:hover {
         padding: 15px; /* Adjust padding for smaller screens */
     }
 }
+
+.error-message {
+    color: red;
+    font-size: 1em;
+    margin-top: 5px;
+  }
+  
+  input.ng-invalid.ng-touched {
+    border: 1px solid red;
+  }
+  
+  button[disabled] {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }

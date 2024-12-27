@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { LoginUser } from '../../interfaces/login-user';
 import { FormsModule, NgForm } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
@@ -24,18 +24,33 @@ export class LoginComponent {
   }
   
   submitted = false;
+  errorMessage = "";
+  isLoading = false;
   
   constructor(private userService: UserService) { }
 
-   handleLogin(form: NgForm) {
+  handleLogin(form: NgForm) {
     this.submitted = true;
-    console.log("inside handle login");
+    this.errorMessage = "";
+    this.isLoading = true;
     
     if(form.valid && this.checkValidCredentials()) {
-      this.userService.loginUser(this.loginUser)
-    } else (
-      alert("invalid credentials")
-    )
+      this.userService.loginUser(this.loginUser).subscribe({
+        next: (success: boolean) => {
+          this.isLoading = false;
+          if (!success) {
+            this.errorMessage = "An unexpected error occurred during login.";
+          }
+        },
+        error: (errorMessage: string) => {
+          this.isLoading = false;
+          this.errorMessage = errorMessage;
+        }
+      });
+    } else {
+      this.isLoading = false;
+      this.errorMessage = "Please check your username and password format.";
+    }
   }  
 
   checkValidCredentials(): boolean { 

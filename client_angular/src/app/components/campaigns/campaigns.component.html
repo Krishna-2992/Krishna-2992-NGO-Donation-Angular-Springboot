@@ -1,5 +1,56 @@
-<p>campaigns works!</p>
+<section class="section" id="campaignCards">
+  <h2 class="section-title">Our Campaigns</h2>
+  <div class="cards-container">
+    @for (campaign of campaigns(); track campaign.campaignId) {
+    <a
+      [routerLink]="['/campaign']"
+      [queryParams]="{ id: campaign.campaignId }"
+      class="card no-link"
+      [ngClass]="getStatusClass(campaign.status)"
+    >
+      <div class="card-icon">
+        <i [class]="campaign.icon || 'fa-solid fa-heart'"></i>
+      </div>
+      <h3>{{ campaign.title }}</h3>
 
-<div>
-  {{ campaigns() | json }}
-</div>
+      <!-- Progress Bar -->
+      <div class="progress-container">
+        <div class="progress-bar">
+          <div
+            class="progress"
+            [style.width.%]="
+              calculateProgress(campaign.fundRaised, campaign.targetAmount)
+            "
+          ></div>
+        </div>
+        <div class="progress-info">
+          Raised: {{ formatCurrency(campaign.fundRaised) }} /
+          {{ formatCurrency(campaign.targetAmount) }}
+        </div>
+      </div>
+
+      <p>{{ campaign.description }}</p>
+
+      <!-- Campaign Dates -->
+      <div class="campaign-dates">
+        <span>From: {{ campaign.startDate | date : "mediumDate" }}</span>
+        <span>To: {{ campaign.endDate | date : "mediumDate" }}</span>
+      </div>
+
+      <!-- Status Overlay -->
+      <div class="status-overlay">
+        <span class="status-text">
+          {{ getStatusText(campaign.status) }}
+        </span>
+      </div>
+    </a>
+    } @if (user() && user().role == "ADMIN") {
+    <a routerLink="/addCampaignForm" class="card add-campaign-card">
+      <div class="card-icon">
+        <i class="fas fa-plus-circle"></i>
+      </div>
+      <h3>Create New Campaign</h3>
+    </a>
+    }
+  </div>
+</section>

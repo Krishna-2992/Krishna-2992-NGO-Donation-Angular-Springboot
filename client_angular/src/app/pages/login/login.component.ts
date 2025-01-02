@@ -7,12 +7,13 @@ import { Observable } from 'rxjs';
 import { JsonPipe, NgLocaleLocalization, NgIf } from '@angular/common';
 import { UserService } from '../../services/user.service';
 import { Router } from '@angular/router';
-import { NavbarComponent } from '../../components/navbar/navbar.component';
+import {MatInputModule} from '@angular/material/input';
+import {MatFormFieldModule} from '@angular/material/form-field';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [FormsModule, JsonPipe, NavbarComponent, NgIf],
+  imports: [FormsModule, JsonPipe, NgIf, MatInputModule], 
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })

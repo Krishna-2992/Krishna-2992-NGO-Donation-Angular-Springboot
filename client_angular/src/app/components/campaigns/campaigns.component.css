@@ -1,0 +1,170 @@
+.section {
+    padding: 4rem 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.section-title {
+    text-align: center;
+    margin-bottom: 3rem;
+    color: #2D3436;
+    font-size: 2.5rem;
+    position: relative;
+}
+
+.section-title:after {
+    content: '';
+    display: block;
+    width: 100px;
+    height: 4px;
+    background: #FF6B6B;
+    margin: 1rem auto;
+    border-radius: 2px;
+}
+
+.cards-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    padding: 1rem;
+}
+
+.card {
+    position: relative;
+    text-decoration: none;
+    background: white;
+    border-radius: 20px;
+    padding: 2rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-10px);
+}
+
+.card-icon {
+    width: 60px;
+    height: 60px;
+    background: #FFE3E3;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+    color: #FF6B6B;
+    font-size: 1.5rem;
+}
+
+.card h3 {
+    color: #2D3436;
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+}
+
+.card p {
+    color: #636E72;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+}
+
+.campaign-dates {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9rem;
+    color: #636E72;
+    margin-top: 1rem;
+}
+
+.fulfilled-campaign {
+    background-color: rgba(50, 205, 50, 0.1);
+    border: 2px solid rgba(0, 128, 0, 0.3);
+}
+
+.fulfilled-campaign:hover {
+    background-color: rgba(50, 205, 50, 0.2);
+    border-color: rgba(0, 128, 0, 0.5);
+}
+
+.active-campaign {
+    background-color: rgba(255, 107, 107, 0.1);
+    border: 2px solid rgba(255, 107, 107, 0.3);
+}
+
+.active-campaign:hover {
+    background-color: rgba(255, 107, 107, 0.2);
+    border-color: rgba(255, 107, 107, 0.5);
+}
+
+.inactive-campaign {
+    background-color: rgba(128, 128, 128, 0.1);
+    border: 2px solid rgba(128, 128, 128, 0.3);
+}
+
+.inactive-campaign:hover {
+    background-color: rgba(128, 128, 128, 0.2);
+    border-color: rgba(128, 128, 128, 0.5);
+}
+
+.progress-container {
+    margin: 1.5rem 0;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 10px;
+    background-color: #f0f0f0;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.progress {
+    height: 100%;
+    background-color: #FF6B6B;
+    transition: width 0.3s ease;
+}
+
+.progress-info {
+    margin-top: 0.5rem;
+    color: #636E72;
+    font-size: 0.9rem;
+}
+
+.status-overlay {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    padding: 0.5rem 1rem;
+    border-radius: 15px;
+    background-color: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.status-text {
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.add-campaign-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(255, 107, 107, 0.1);
+    border: 2px dashed #FF6B6B;
+    transition: all 0.3s ease;
+}
+
+.add-campaign-card:hover {
+    background-color: rgba(255, 107, 107, 0.2);
+    border-style: solid;
+}
+
+.add-campaign-card .card-icon {
+    background-color: #FF6B6B;
+    color: white;
+}
+
+.add-campaign-card h3 {
+    color: #FF6B6B;
+}

@@ -21,7 +21,7 @@ export class RegisterComponent {
     address: '',
     loginName: '',
     password: '',
-    role: 'Donor',
+    role: 'DONOR',
     panNumber: ''
   }
   submitted = false;

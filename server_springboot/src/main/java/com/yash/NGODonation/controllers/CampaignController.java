@@ -20,6 +20,7 @@ public class CampaignController {
 
     @PostMapping
     public CampaignEntity createCampaign(@RequestBody CampaignEntity campaign) {
+        System.out.println("campaign:---------" + campaign);
         return campaignService.createCampaign(campaign);
     }
 

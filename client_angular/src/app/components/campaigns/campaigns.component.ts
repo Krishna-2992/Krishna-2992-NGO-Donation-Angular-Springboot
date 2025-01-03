@@ -71,16 +71,11 @@ export class CampaignsComponent implements OnInit {
     }
   }
 
-  calculateProgress(fundRaised: string, targetAmount: string): number {
-    const raised = parseFloat(fundRaised.replace(/[₹,]/g, ''));
-    const target = parseFloat(targetAmount.replace(/[₹,]/g, ''));
-    return (raised / target) * 100;
+  calculateProgress(fundRaised: number, targetAmount: number): number {
+    return (fundRaised / targetAmount) * 100;
   }
 
-  formatCurrency(amount: string): string {
-    if (!amount.includes('₹')) {
+  formatCurrency(amount: number): string {
       return `₹${amount}`;
-    }
-    return amount;
   }
 }

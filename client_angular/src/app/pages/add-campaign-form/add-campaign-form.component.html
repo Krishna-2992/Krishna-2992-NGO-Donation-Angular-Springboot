@@ -1,1 +1,165 @@
-<p>add-campaign-form works!</p>
+<mat-card class="campaign-form-card">
+  <mat-card-header>
+    <mat-card-title>Add New Campaign</mat-card-title>
+  </mat-card-header>
+
+  <mat-card-content>
+    <div *ngIf="errorMessage" class="error-alert">
+      <mat-error>{{ errorMessage }}</mat-error>
+    </div>
+
+    <form
+      #campaignForm="ngForm"
+      (ngSubmit)="handleSubmit(campaignForm)"
+      class="campaign-form"
+    >
+      <!-- Title Field -->
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Campaign Title</mat-label>
+        <input
+          matInput
+          type="text"
+          name="title"
+          [(ngModel)]="campaign.title"
+          #title="ngModel"
+          required
+          maxlength="100"
+        />
+        <mat-error
+          *ngIf="title.invalid && (title.dirty || title.touched || submitted)"
+        >
+          <span *ngIf="title.errors?.['required']">Title is required</span>
+        </mat-error>
+      </mat-form-field>
+
+      <!-- Description Field -->
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Description</mat-label>
+        <textarea
+          matInput
+          name="description"
+          [(ngModel)]="campaign.description"
+          #description="ngModel"
+          required
+          rows="4"
+        ></textarea>
+        <mat-error
+          *ngIf="
+            description.invalid &&
+            (description.dirty || description.touched || submitted)
+          "
+        >
+          <span *ngIf="description.errors?.['required']"
+            >Description is required</span
+          >
+        </mat-error>
+      </mat-form-field>
+
+      <!-- Target Amount Field -->
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Target Amount</mat-label>
+        <input
+          matInput
+          type="number"
+          name="targetAmount"
+          [(ngModel)]="campaign.targetAmount"
+          #targetAmount="ngModel"
+          required
+          min="0"
+          id="targetInput"
+        />
+        <span matPrefix id="currencySign">₹</span>
+        <mat-error
+          *ngIf="
+            targetAmount.invalid &&
+            (targetAmount.dirty || targetAmount.touched || submitted)
+          "
+        >
+          <span *ngIf="targetAmount.errors?.['required']"
+            >Target amount is required</span
+          >
+          <span *ngIf="targetAmount.errors?.['min']"
+            >Amount must be positive</span
+          >
+        </mat-error>
+      </mat-form-field>
+
+      <!-- Start Date Field -->
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Start Date</mat-label>
+        <input
+          matInput
+          [matDatepicker]="startPicker"
+          name="startDate"
+          [(ngModel)]="campaign.startDate"
+          #startDate="ngModel"
+          required
+        />
+        <mat-datepicker-toggle
+          matIconSuffix
+          [for]="startPicker"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #startPicker></mat-datepicker>
+        <mat-error
+          *ngIf="
+            startDate.invalid &&
+            (startDate.dirty || startDate.touched || submitted)
+          "
+        >
+          <span *ngIf="startDate.errors?.['required']"
+            >Start date is required</span
+          >
+        </mat-error>
+      </mat-form-field>
+
+      <!-- End Date Field -->
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>End Date</mat-label>
+        <input
+          matInput
+          [matDatepicker]="endPicker"
+          name="endDate"
+          [(ngModel)]="campaign.endDate"
+          #endDate="ngModel"
+          required
+        />
+        <mat-datepicker-toggle
+          matIconSuffix
+          [for]="endPicker"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #endPicker></mat-datepicker>
+        <mat-error
+          *ngIf="
+            endDate.invalid && (endDate.dirty || endDate.touched || submitted)
+          "
+        >
+          <span *ngIf="endDate.errors?.['required']">End date is required</span>
+        </mat-error>
+      </mat-form-field>
+
+      <!-- Status Field -->
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Status</mat-label>
+        <mat-select name="status" [(ngModel)]="campaign.status" required>
+          <mat-option value="ACTIVE">Active</mat-option>
+          <mat-option value="INACTIVE">Inactive</mat-option>
+          <mat-option value="DRAFT">Draft</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </form>
+  </mat-card-content>
+
+  <mat-card-actions align="end">
+    <button mat-stroked-button type="button" [routerLink]="['/campaigns']">
+      Cancel
+    </button>
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="campaignForm.ngSubmit.emit()"
+      [disabled]="campaignForm.invalid"
+    >
+      Create Campaign
+    </button>
+  </mat-card-actions>
+</mat-card>

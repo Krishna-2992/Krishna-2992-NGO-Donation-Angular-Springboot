@@ -1,0 +1,204 @@
+.container {
+    max-width: 1000px;
+    margin: 40px auto 0;
+    padding: 2rem 1rem;
+  }
+  
+  .campaign-header {
+    position: relative;
+    margin-bottom: 2rem;
+  }
+  
+  .campaign-title {
+    font-size: 2.5rem;
+    color: #333;
+    margin: 1.5rem 0;
+  }
+  
+  .campaign-description {
+    color: #555;
+    line-height: 1.6;
+    font-size: 1.1rem;
+    margin-bottom: 2rem;
+  }
+  
+  .campaign-stats {
+    background: white;
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 2rem;
+  }
+  
+  .progress-container {
+    background: #eee;
+    height: 12px;
+    border-radius: 6px;
+    margin: 1.5rem 0;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .progress-bar {
+    height: 100%;
+    background: #ff6b6b;
+    border-radius: 6px;
+    transition: width 1s ease;
+  }
+  
+  .amounts {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+  }
+  
+  .amount-raised {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #ff6b6b;
+  }
+  
+  .progress-percentage {
+    font-size: 1rem;
+    font-weight: normal;
+    color: #776b6b;
+  }
+  
+  .target-amount {
+    font-size: 1.1rem;
+    color: #666;
+    align-self: flex-end;
+  }
+  
+  .campaign-meta {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
+  
+  .meta-item {
+    text-align: center;
+    padding: 1rem;
+    background: #f8f8f8;
+    border-radius: 8px;
+  }
+  
+  .meta-label {
+    color: #666;
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .meta-value {
+    color: #333;
+    font-size: 1.1rem;
+    font-weight: bold;
+  }
+  
+  .fulfilled-badge {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .donation-section {
+    background: white;
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .donation-title {
+    font-size: 1.5rem;
+    color: #333;
+    margin-bottom: 1.5rem;
+  }
+  
+  .donation-amounts {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .amount-btn {
+    background: #f8f8f8;
+    border: 2px solid #ddd;
+    padding: 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+  }
+  
+  .amount-btn:hover {
+    background: #ffe5e5;
+    border-color: #ff6b6b;
+    color: #ff6b6b;
+  }
+  
+  .amount-btn.active {
+    background: #ff6b6b;
+    border-color: #ff6b6b;
+    color: white;
+  }
+  
+  .custom-amount {
+    width: 100%;
+    padding: 1rem;
+    font-size: 1.1rem;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+    outline: none;
+    transition: border-color 0.3s ease;
+  }
+  
+  .custom-amount:focus {
+    border-color: #ff6b6b;
+  }
+  
+  .donate-btn {
+    width: 100%;
+    background: #ff6b6b;
+    color: white;
+    border: none;
+    padding: 1rem;
+    font-size: 1.2rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .donate-btn:hover {
+    background: #ff5252;
+  }
+  
+  @media (max-width: 768px) {
+    .campaign-title {
+      font-size: 2rem;
+    }
+  
+    .campaign-meta {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  
+    .donation-amounts {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .campaign-meta {
+      grid-template-columns: 1fr;
+    }
+  }

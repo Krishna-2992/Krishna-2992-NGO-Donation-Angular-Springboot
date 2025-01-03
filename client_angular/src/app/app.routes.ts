@@ -4,6 +4,7 @@ import { HomepageComponent } from './pages/homepage/homepage.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { UserDashboardComponent } from './pages/user-dashboard/user-dashboard.component';
 import { AddCampaignFormComponent } from './pages/add-campaign-form/add-campaign-form.component';
+import { CampaignComponent } from './pages/campaign/campaign.component';
 
 export const routes: Routes = [
     {
@@ -31,6 +32,9 @@ export const routes: Routes = [
         title: "AddCampaignForm", 
         component: AddCampaignFormComponent
     }, 
-
-    
+    {
+        path: "campaign",
+        title: "Campaign", 
+        component: CampaignComponent
+    },    
 ];

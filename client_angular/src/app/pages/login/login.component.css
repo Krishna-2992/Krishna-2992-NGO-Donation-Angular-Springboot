@@ -1,86 +1,112 @@
 .loginPage {
-    min-height: 50vh; /* Full height of the viewport */
+    min-height: 50vh;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-color: #ffffff; /* White background for the form */
-    border-radius: 8px; /* Rounded corners */
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-    padding: 20px; /* Padding around the content */
-    width: 90%; /* Responsive width */
-    max-width: 400px; /* Maximum width for larger screens */
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 90%;
+    max-width: 400px;
     margin: auto;
     margin-top: 20px;
 }
 
 h1 {
-    margin-bottom: 20px; /* Space below the heading */
-    color: #333; /* Darker color for better readability */
+    margin-bottom: 20px;
+    color: #333;
 }
 
 form {
-    width: 100%; /* Full width of the parent */
+    width: 100%;
     padding: 20px;
 }
 
 div {
-    margin-bottom: 15px; /* Space between form elements */
+    margin-bottom: 15px;
 }
 
-label {
-    display: block; /* Labels on their own line */
-    margin-bottom: 5px; /* Space below the label */
-    color: #555; /* Slightly lighter color for labels */
+/* Custom styling for Material form fields */
+.custom-form-field {
+    border: #ff6b6b;
+    width: 100%;
 }
 
-input[type="text"], input[type="password"] {
-    width: 90%; /* Full width of the parent */
-    padding: 10px; /* Padding inside the input */
-    border: 1px solid #ccc; /* Light border */
-    border-radius: 4px; /* Rounded corners */
-    font-size: 16px; /* Larger font size for better readability */
-    transition: border-color 0.3s; /* Smooth transition for border color */
+::ng-deep .mat-mdc-form-field-outline {
+    background-color: white;
 }
 
-input[type="text"]:focus, input[type="password"]:focus {
-    border-color: #ff6b6b; /* Change border color on focus */
-    outline: none; /* Remove default outline */
+::ng-deep .mat-mdc-text-field-wrapper {
+    padding: 0 !important;
 }
 
-button {
-    width: 100%; /* Full width of the parent */
-    padding: 10px; /* Padding inside the button */
-    background-color: #ff6b6b; /* Bootstrap primary color */
-    color: white; /* White text color */
-    border: none; /* No border */
-    border-radius: 4px; /* Rounded corners */
-    font-size: 16px; /* Larger font size */
-    cursor: pointer; /* Pointer cursor on hover */
-    transition: background-color 0.3s; /* Smooth transition for background color */
+::ng-deep .mat-mdc-form-field {
+    width: 100%;
 }
 
-button:hover {
-    background-color: #ff5b5b; /* Darker shade on hover */
+::ng-deep .mat-mdc-form-field-flex {
+    padding: 0 !important;
 }
 
-@media (max-width: 600px) {
-    .loginPage {
-        padding: 15px; /* Adjust padding for smaller screens */
-    }
+::ng-deep .mat-mdc-text-field-wrapper.mdc-text-field--outlined .mat-mdc-form-field-infix {
+    padding: 10px 0;
+}
+
+::ng-deep .mat-mdc-form-field-appearance-outline .mat-mdc-form-field-outline {
+    color: #ccc;
+}
+
+::ng-deep .mat-mdc-form-field-appearance-outline.mat-focused .mat-mdc-form-field-outline {
+    color: #ff6b6b; /* Border color on focus */
+}
+
+::ng-deep .mat-mdc-form-field-appearance-outline.mat-focused .mat-mdc-form-field-infix {
+    color: #ff6b6b; /* Text color on focus */
+}
+
+/* Button styling */
+button[mat-raised-button] {
+    width: 100%;
+    padding: 10px;
+    background-color: #ff6b6b;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    line-height: normal;
+}
+
+button[mat-raised-button]:hover {
+    background-color: #ff5b5b;
+}
+
+button[mat-raised-button][disabled] {
+    opacity: 0.5;
+    cursor: not-allowed;
 }
 
 .error-message {
     color: red;
     font-size: 1em;
     margin-top: 5px;
-  }
-  
-  input.ng-invalid.ng-touched {
-    border: 1px solid red;
-  }
-  
-  button[disabled] {
-    opacity: 0.5;
-    cursor: not-allowed;
-  }
+}
+
+/* Loading spinner styles */
+mat-spinner {
+    display: inline-block;
+    margin-right: 8px;
+}
+
+::ng-deep .mat-mdc-progress-spinner circle {
+    stroke: white;
+}
+
+@media (max-width: 600px) {
+    .loginPage {
+        padding: 15px;
+    }
+}

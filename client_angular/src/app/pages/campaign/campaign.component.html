@@ -1,0 +1,100 @@
+<div class="container" *ngIf="campaign(); else noCampaign">
+  <div class="campaign-header">
+    <h1 class="campaign-title">{{ campaign().title }}</h1>
+
+    <!-- Fulfilled Badge -->
+    <div class="fulfilled-badge" *ngIf="campaign().status === 'FULFILLED'">
+      Fully Funded
+    </div>
+
+    <p class="campaign-description">
+      {{ campaign().description }}
+    </p>
+  </div>
+
+  <div class="campaign-stats">
+    <div class="amounts">
+      <span class="amount-raised">
+        ₹{{ campaign().fundRaised }}
+        <span class="progress-percentage"
+          >({{ progressPercentage | number : "1.1-1" }}%)</span
+        >
+      </span>
+      <span class="target-amount"
+        >raised of ₹{{ campaign().targetAmount }} goal</span
+      >
+    </div>
+
+    <div class="progress-container">
+      <div
+        class="progress-bar"
+        [style.width.%]="progressPercentage > 100 ? 100 : progressPercentage"
+      ></div>
+    </div>
+
+    <div class="campaign-meta">
+      <div class="meta-item">
+        <div class="meta-label">Donations</div>
+        <div class="meta-value">{{ donationCount }}</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-label">Start Date</div>
+        <div class="meta-value">{{ campaign().startDate }}</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-label">End Date</div>
+        <div class="meta-value">{{ campaign().endDate }}</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="donation-section" *ngIf="campaign().status === 'ACTIVE'">
+    <h2 class="donation-title">Make a Donation</h2>
+    <div class="donation-amounts">
+      <button
+        type="button"
+        class="amount-btn"
+        [class.active]="donationAmount === 25"
+        (click)="selectAmount(25)"
+      >
+        ₹25
+      </button>
+      <button
+        type="button"
+        class="amount-btn"
+        [class.active]="donationAmount === 50"
+        (click)="selectAmount(50)"
+      >
+        ₹50
+      </button>
+      <button
+        type="button"
+        class="amount-btn"
+        [class.active]="donationAmount === 100"
+        (click)="selectAmount(100)"
+      >
+        ₹100
+      </button>
+      <button
+        type="button"
+        class="amount-btn"
+        [class.active]="donationAmount === 200"
+        (click)="selectAmount(200)"
+      >
+        ₹200
+      </button>
+    </div>
+
+    <input
+      type="number"
+      class="custom-amount"
+      [(ngModel)]="donationAmount"
+      placeholder="Enter custom amount"
+    />
+
+    <button class="donate-btn" (click)="onDonate()">Donate Now</button>
+  </div>
+</div>
+<ng-template #noCampaign>
+  <div class="error-message">Campaign not found or failed to load.</div>
+</ng-template>

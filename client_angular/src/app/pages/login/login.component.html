@@ -1,31 +1,66 @@
 <div class="loginPage">
   <h1>Login page</h1>
-  <form #loginForm="ngForm" (ngSubmit)="handleLogin(loginForm)" class="form">
+
+  <form #loginForm="ngForm" (ngSubmit)="handleLogin(loginForm)">
     <div>
-      <label for="username">Username:</label>
-      <input
-        type="text"
-        id="username"
-        name="username"
-        [(ngModel)]="loginUser.loginName"
-        #username="ngModel"
-        required
-      />
+      <mat-form-field appearance="outline" class="custom-form-field">
+        <mat-label>Username</mat-label>
+        <input
+          matInput
+          type="text"
+          name="username"
+          [(ngModel)]="loginUser.loginName"
+          #username="ngModel"
+          required
+          placeholder="Enter your username"
+        />
+        <mat-error
+          *ngIf="
+            username.invalid &&
+            (username.dirty || username.touched || submitted)
+          "
+        >
+          Username is required
+        </mat-error>
+      </mat-form-field>
     </div>
+
     <div>
-      <label for="password">Password:</label>
-      <input
-        type="password"
-        id="password"
-        name="password"
-        [(ngModel)]="loginUser.password"
-        #password="ngModel"
-        required
-      />
+      <mat-form-field appearance="outline" class="custom-form-field">
+        <mat-label>Password</mat-label>
+        <input
+          matInput
+          type="password"
+          name="password"
+          [(ngModel)]="loginUser.password"
+          #password="ngModel"
+          required
+          placeholder="Enter your password"
+        />
+        <mat-error
+          *ngIf="
+            password.invalid &&
+            (password.dirty || password.touched || submitted)
+          "
+        >
+          Password is required
+        </mat-error>
+      </mat-form-field>
     </div>
-    <div class="error-message">{{ errorMessage }}</div>
+
+    <div class="error-message" *ngIf="errorMessage">
+      {{ errorMessage }}
+    </div>
+
     <div>
-      <button type="submit" [disabled]="loginForm.invalid">Login</button>
+      <button
+        mat-raised-button
+        type="submit"
+        [disabled]="loginForm.invalid || isLoading"
+      >
+        <mat-spinner diameter="20" *ngIf="isLoading"></mat-spinner>
+        <span *ngIf="!isLoading">Login</span>
+      </button>
     </div>
   </form>
 </div>

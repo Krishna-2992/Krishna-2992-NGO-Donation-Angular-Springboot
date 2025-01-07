@@ -1,6 +1,6 @@
 import { Injectable, signal } from '@angular/core';
 import { Donation } from '../interfaces/donation';
-import { HttpClient, HttpErrorResponse, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpResponse, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { catchError, map, Observable, throwError } from 'rxjs';
 import { UserService } from './user.service';
@@ -16,25 +16,57 @@ export class DonationService {
 
   private donationUrl = "http://localhost:8080/donations"
   private campaignUrl = "http://localhost:8080/campaigns"
+  private paymentUrl = "http://localhost:8080/payment";
 
   constructor(private http: HttpClient, private router: Router, private userService: UserService) { }
 
-  addDonation(donation: Donation): Observable<boolean> {
-    console.log("donation", donation)
-    console.log("add donaiton")
-    if(this.userService.getUser().userId === 0) {
-      this.router.navigate(['/login']);
-    }
-    return this.setDonationData(donation)
+   // Add this method for creating Razorpay order
+   createOrder(amount: number): Observable<any> {
+    return this.http.get(`${this.paymentUrl}/create-order?amount=${amount}`);
   }
 
+  // Add this method for verifying payment
+  verifyPayment(paymentData: any): Observable<any> {
+    const headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
+    const body = new URLSearchParams();
+    body.set('razorpay_payment_id', paymentData.razorpay_payment_id);
+    body.set('razorpay_order_id', paymentData.razorpay_order_id);
+    body.set('razorpay_signature', paymentData.razorpay_signature);
+
+    return this.http.post(`${this.paymentUrl}/verify`, body.toString(), { headers });
+  }
+
+  // Modify addDonation to handle payment first
+  addDonation(donation: Donation): Observable<any> {
+    console.log("donation", donation);
+    if (this.userService.getUser().userId === 0) {
+      this.router.navigate(['/login']);
+      return throwError(() => 'User not logged in');
+    }
+
+    // Create Razorpay order first
+    return this.createOrder(donation.amount).pipe(
+      map(orderData => {
+        return {
+          donation: donation,
+          orderData: orderData
+        };
+      })
+    );
+  }
+
+  // Add this method to save donation after payment
+  saveDonation(donation: Donation): Observable<any> {
+    return this.setDonationData(donation);
+  }
+
+  // Your existing methods remain the same
   setDonationData(donation: Donation): Observable<any> {
     console.log("add donation: ", donation);
-    console.log("current date: ", Date.now().toLocaleString())
     return this.http.post(`${this.donationUrl}`, {
-      "donorId": donation.donorId, 
-      "amount": donation.amount, 
-      "campaignId": donation.campaignId, 
+      "donorId": donation.donorId,
+      "amount": donation.amount,
+      "campaignId": donation.campaignId,
       "donationDate": donation.donationDate
     });
   }

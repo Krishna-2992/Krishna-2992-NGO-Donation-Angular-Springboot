@@ -7,7 +7,8 @@ import { FormsModule } from '@angular/forms';
 import { DonationService } from '../../services/donation.service';
 import { UserService } from '../../services/user.service';
 import { Donation } from '../../interfaces/donation';
-import { ErrorStateMatcher } from '@angular/material/core';
+
+declare var Razorpay: any;
 
 @Component({
   selector: 'app-campaign',
@@ -49,6 +50,11 @@ export class CampaignComponent implements OnInit {
   ngOnInit() {
     // Get the campaign ID from URL parameters
     console.log("in ngoninit")
+
+    const script = document.createElement('script');
+    script.src = 'https://checkout.razorpay.com/v1/checkout.js';
+    document.body.appendChild(script);
+
     this.route.queryParams.subscribe(params => {
       const campaignId = params['id'];
       if (campaignId) {
@@ -67,6 +73,89 @@ export class CampaignComponent implements OnInit {
     console.log('campaign: ', this.campaign)
   }
 
+  onDonate() {
+    if (this.validateDonation()) {
+      console.log(`Donating amount: ${this.donationAmount}`);
+      this.donation.amount = this.donationAmount;
+      this.donation.donorId = this.userService.getUser().userId;
+      this.donation.campaignId = this.campaign().campaignId;
+      this.donation.donationDate = String(Date.now());
+
+      // Modified donation flow to include payment
+      this.donationService.addDonation(this.donation).subscribe({
+        next: (response) => {
+          this.handlePayment(response.orderData, response.donation);
+        },
+        error: (errorMessage: string) => {
+          alert(errorMessage);
+        }
+      });
+    }
+  }
+
+  private handlePayment(orderData: any, donation: Donation) {
+    const options = {
+      key: orderData.razorpayKeyId,
+      amount: orderData.amount * 100,
+      currency: orderData.currency,
+      name: "NGO Donation",
+      description: `Donation for ${this.campaign().title}`,
+      order_id: orderData.orderId,
+      handler: (response: any) => {
+        this.verifyPaymentAndSaveDonation(response, donation);
+      },
+      prefill: {
+        name: this.userService.getUser().name || "Anonymous",
+        email: this.userService.getUser().email || "",
+        contact: ""
+      },
+      theme: {
+        color: "#3399cc"
+      },
+      modal: {
+        ondismiss: () => {
+          console.log('Payment cancelled');
+        }
+      }
+    };
+
+    const rzp = new Razorpay(options);
+    rzp.open();
+  }
+
+  private verifyPaymentAndSaveDonation(paymentResponse: any, donation: Donation) {
+    this.donationService.verifyPayment(paymentResponse).subscribe({
+      next: (response) => {
+        if (response.success) {
+          // Save donation after successful payment
+          this.donationService.saveDonation(donation).subscribe({
+            next: (success: boolean) => {
+              // Update campaign amount
+              this.campaignService.updateCampaign(donation.amount, this.campaign().campaignId).subscribe({
+                next: (success: boolean) => {
+                  alert("Donation successful!");
+                  this.router.navigate(['/userDashboard']);
+                },
+                error: (errorMessage: string) => {
+                  alert("Donation recorded but campaign update failed: " + errorMessage);
+                }
+              });
+            },
+            error: (errorMessage: string) => {
+              alert("Payment successful but donation recording failed: " + errorMessage);
+            }
+          });
+        } else {
+          alert("Payment verification failed");
+        }
+      },
+      error: (error) => {
+        console.error('Payment verification error:', error);
+        alert("Payment verification failed");
+      }
+    });
+  }
+
   private getDonationCount(campaignId: number) {
     this.donationCount = 0;
   }
@@ -81,39 +170,5 @@ export class CampaignComponent implements OnInit {
       return false;
     } 
     return true;
-  }
-
-  onDonate() {
-    if (this.validateDonation()) {
-      console.log(`Donating amount: ${this.donationAmount}`);
-      this.donation.amount = this.donationAmount;
-      this.donation.donorId = this.userService.getUser().userId;
-      this.donation.campaignId = this.campaign().campaignId
-      this.donation.donationDate = String(Date.now())
-
-      this.donationService.addDonation(this.donation).subscribe({
-        next: (success: boolean) => {
-          if (success) {
-            alert("payment gateway goes here :)")
-            alert("donation of money successful.")
-            this.campaignService.updateCampaign(this.donationAmount, this.campaign().campaignId).subscribe({
-              next: (success: boolean) => {
-                alert("campaign data updated successfully")
-                this.router.navigate(['/userDashboard']);
-              }, 
-              error: (errorMessage: string) => {
-                alert(errorMessage)
-              }
-            })
-          } else {
-            alert("An unexpected error occurred during login.");
-          }
-        },
-        error: (errorMessage: string) => {
-          alert(errorMessage)
-        } 
-      });
-
-    }
   }
 }

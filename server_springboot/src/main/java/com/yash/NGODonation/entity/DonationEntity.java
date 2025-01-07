@@ -2,7 +2,6 @@ package com.yash.NGODonation.entity;
 
 import jakarta.persistence.*;
 
-import java.time.LocalDate;
 
 @Entity
 @Table(name="donations")
@@ -22,7 +21,7 @@ public class DonationEntity {
     private Integer campaignId;
 
     @Column(name="donation_date")
-    private LocalDate donationDate;
+    private String donationDate;
 
     public Integer getDonationId() {
         return donationId;
@@ -56,11 +55,11 @@ public class DonationEntity {
         this.campaignId = campaignId;
     }
 
-    public LocalDate getDonationDate() {
+    public String getDonationDate() {
         return donationDate;
     }
 
-    public void setDonationDate(LocalDate donationDate) {
+    public void setDonationDate(String donationDate) {
         this.donationDate = donationDate;
     }
 }

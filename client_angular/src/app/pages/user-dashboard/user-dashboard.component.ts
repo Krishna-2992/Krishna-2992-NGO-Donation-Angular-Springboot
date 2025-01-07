@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { UserService } from '../../services/user.service';
+import { CampaignsComponent } from '../../components/campaigns/campaigns.component';
 
 @Component({
   selector: 'app-user-dashboard',
   standalone: true,
-  imports: [],
+  imports: [CampaignsComponent],
   templateUrl: './user-dashboard.component.html',
   styleUrl: './user-dashboard.component.css'
 })

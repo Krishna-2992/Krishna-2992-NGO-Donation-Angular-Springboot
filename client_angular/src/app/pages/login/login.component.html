@@ -13,6 +13,7 @@
           #username="ngModel"
           required
           placeholder="Enter your username"
+          id="username-input"
         />
         <mat-error
           *ngIf="
@@ -36,6 +37,7 @@
           #password="ngModel"
           required
           placeholder="Enter your password"
+          id="password-input"
         />
         <mat-error
           *ngIf="
@@ -62,5 +64,9 @@
         <span *ngIf="!isLoading">Login</span>
       </button>
     </div>
+
+    <a routerLink="/register" routerLinkActive="active">
+      <div class="link">Don't have an account? Register</div>
+    </a>
   </form>
 </div>

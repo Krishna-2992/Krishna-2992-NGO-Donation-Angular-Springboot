@@ -84,6 +84,7 @@ export class UserService {
       role: '',
       panNumber: ''
     });
+    this.router.navigate(['/']);
   }
 
   getUserData(loginUser: LoginUser): Observable<HttpResponse<User>> {

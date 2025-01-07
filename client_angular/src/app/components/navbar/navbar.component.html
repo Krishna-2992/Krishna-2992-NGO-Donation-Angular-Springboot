@@ -5,9 +5,22 @@
     @if(user().name === '') {
     <div class="buttons">
       <a routerLink="/" routerLinkActive="active" class="button">Home</a>
+      <a routerLink="#" routerLinkActive="active" class="button"
+        >Our Campaigns</a
+      >
 
-      <a routerLink="/login" routerLinkActive="active" class="button">Login</a>
-      <a routerLink="/register" routerLinkActive="active" class="button"
+      <a
+        routerLink="/login"
+        routerLinkActive="active"
+        class="button"
+        id="login-btn"
+        >Login</a
+      >
+      <a
+        routerLink="/register"
+        routerLinkActive="active"
+        class="button"
+        id="register-btn"
         >Register</a
       >
     </div>
@@ -20,8 +33,8 @@
       <a routerLink="/donations" routerLinkActive="active" class="button"
         >Donations</a
       >
-      <a (click)="logOut()" class="button">Logout</a>
-      <div>
+      <a (click)="logOut()" class="button" id="logout-btn">Logout</a>
+      <div id="username">
         {{ user().name }}
       </div>
     </div>

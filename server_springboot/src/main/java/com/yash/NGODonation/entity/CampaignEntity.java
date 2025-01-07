@@ -27,11 +27,11 @@ public class CampaignEntity {
 
     @NotBlank
     @Column(name = "fund_raised")
-    private String fundRaised;
+    private double fundRaised;
 
     @NotBlank
     @Column(name = "target_amount")
-    private String targetAmount;
+    private double targetAmount;
 
     @NotNull(message = "Start date cannot be null")
     @Column(name = "start_date")
@@ -73,19 +73,19 @@ public class CampaignEntity {
         this.description = description;
     }
 
-    public @NotBlank String getFundRaised() {
+    public @NotBlank double getFundRaised() {
         return fundRaised;
     }
 
-    public void setFundRaised(@NotBlank String fundRaised) {
+    public void setFundRaised(@NotBlank double fundRaised) {
         this.fundRaised = fundRaised;
     }
 
-    public @NotBlank String getTargetAmount() {
+    public @NotBlank double getTargetAmount() {
         return targetAmount;
     }
 
-    public void setTargetAmount(@NotBlank String targetAmount) {
+    public void setTargetAmount(@NotBlank double targetAmount) {
         this.targetAmount = targetAmount;
     }
 

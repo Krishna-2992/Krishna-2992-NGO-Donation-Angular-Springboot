@@ -5,6 +5,7 @@ import { RegisterComponent } from './pages/register/register.component';
 import { UserDashboardComponent } from './pages/user-dashboard/user-dashboard.component';
 import { AddCampaignFormComponent } from './pages/add-campaign-form/add-campaign-form.component';
 import { CampaignComponent } from './pages/campaign/campaign.component';
+import { DonationsComponent } from './pages/donations/donations.component';
 
 export const routes: Routes = [
     {
@@ -16,7 +17,7 @@ export const routes: Routes = [
         path: "login", 
         title: "Login", 
         component: LoginComponent
-    }, 
+    },
     {
         path: "register", 
         title: "Register", 
@@ -36,5 +37,10 @@ export const routes: Routes = [
         path: "campaign",
         title: "Campaign", 
         component: CampaignComponent
-    },    
+    },   
+    {
+        path: "donations",
+        title: "Donations", 
+        component: DonationsComponent
+    },
 ];

@@ -1,1 +1,31 @@
-<p>donations works!</p>
+<div class="main-container">
+  <div class="donors-container">
+    <div class="donors-header">
+      <div class="donors-header-text">Complete donation List</div>
+    </div>
+    <table class="donors-table">
+      <thead>
+        <tr>
+          <th>Donation Id</th>
+          <th>Donor Id</th>
+          <th>Campaign Id</th>
+          <th>Donation Amount</th>
+          <th>Donation Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (donation of donations(); track donation.donationId) {
+        <tr>
+          <td>{{ donation.donationId }}</td>
+          <td>{{ donation.donorId }}</td>
+          <td>{{ donation.campaignId }}</td>
+          <td>{{ donation.amount }}</td>
+          <td>
+            {{ convertDate(donation.donationDate) }}
+          </td>
+        </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>

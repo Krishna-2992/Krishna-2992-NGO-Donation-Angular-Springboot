@@ -8,13 +8,16 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/donation")
+@RequestMapping("/donations")
+@CrossOrigin(origins = "*")
 public class DonationController {
     @Autowired
     public DonationService donationService;
 
     @PostMapping
     public DonationEntity createDonation(@RequestBody DonationEntity donation) {
+        System.out.println("----Create donation----");
+        System.out.println(donation);
         return donationService.addDonation(donation);
     }
 

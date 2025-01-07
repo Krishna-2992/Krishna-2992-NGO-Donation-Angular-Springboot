@@ -103,4 +103,13 @@ export class CampaignService {
       })
     )
   }
+
+  updateCampaign(amount: number, campaignId: number): Observable<boolean> {
+    return this.updateCampaignFundRaised(amount, campaignId)
+  }
+
+  updateCampaignFundRaised(amount: number, campaignId: number): Observable<any> {
+      console.log("updating campaign fund raised: ", amount, " ", campaignId)
+      return this.http.patch(`${this.url}?campaignId=${campaignId}&amount=${amount}`, {})
+    }
 }

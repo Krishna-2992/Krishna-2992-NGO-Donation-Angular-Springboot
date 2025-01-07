@@ -1,12 +1,13 @@
 import { Component, computed, OnInit } from '@angular/core';
 import { CommonModule, JsonPipe } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Campaign } from '../../interfaces/campaign';
 import { CampaignService } from '../../services/campaign.service';
 import { FormsModule } from '@angular/forms';
 import { DonationService } from '../../services/donation.service';
 import { UserService } from '../../services/user.service';
 import { Donation } from '../../interfaces/donation';
+import { ErrorStateMatcher } from '@angular/material/core';
 
 @Component({
   selector: 'app-campaign',
@@ -24,6 +25,7 @@ export class CampaignComponent implements OnInit {
     if (!c) throw new Error('No campaign loaded');
     return c;
   });
+
   donationAmount: number = 0;
   donationCount: number = 0;
   progressPercentage: number = 0;
@@ -40,7 +42,8 @@ export class CampaignComponent implements OnInit {
     private route: ActivatedRoute,
     private userService: UserService,
     private campaignService: CampaignService,
-    private donationService: DonationService
+    private donationService: DonationService, 
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -76,15 +79,41 @@ export class CampaignComponent implements OnInit {
     if (!this.donationAmount || this.donationAmount <= 0) {
       alert('Please select or enter a valid donation amount');
       return false;
-    }
+    } 
     return true;
   }
 
   onDonate() {
     if (this.validateDonation()) {
       console.log(`Donating amount: ${this.donationAmount}`);
-      this.donationService.addDonation(this.donation)
+      this.donation.amount = this.donationAmount;
+      this.donation.donorId = this.userService.getUser().userId;
+      this.donation.campaignId = this.campaign().campaignId
+      this.donation.donationDate = String(Date.now())
+
+      this.donationService.addDonation(this.donation).subscribe({
+        next: (success: boolean) => {
+          if (success) {
+            alert("payment gateway goes here :)")
+            alert("donation of money successful.")
+            this.campaignService.updateCampaign(this.donationAmount, this.campaign().campaignId).subscribe({
+              next: (success: boolean) => {
+                alert("campaign data updated successfully")
+                this.router.navigate(['/userDashboard']);
+              }, 
+              error: (errorMessage: string) => {
+                alert(errorMessage)
+              }
+            })
+          } else {
+            alert("An unexpected error occurred during login.");
+          }
+        },
+        error: (errorMessage: string) => {
+          alert(errorMessage)
+        } 
+      });
+
     }
   }
-
 }

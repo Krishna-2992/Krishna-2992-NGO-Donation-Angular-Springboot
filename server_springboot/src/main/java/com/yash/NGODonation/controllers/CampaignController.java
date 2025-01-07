@@ -2,6 +2,7 @@ package com.yash.NGODonation.controllers;
 
 import com.yash.NGODonation.entity.CampaignEntity;
 import com.yash.NGODonation.service.CampaignService;
+import jakarta.websocket.server.PathParam;
 import org.apache.tomcat.util.http.parser.HttpParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -40,6 +41,13 @@ public class CampaignController {
             return new ResponseEntity<>(campaign.get(), HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    @PatchMapping
+    public ResponseEntity<CampaignEntity> updateCampaignFundRaised(@PathParam("amount") double amount, @PathParam("campaignId") int campaignId) {
+        System.out.println("update campaing: " + campaignId + " fund raised by: " + amount);
+        campaignService.updateCampaignFundRaised(amount, campaignId);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 

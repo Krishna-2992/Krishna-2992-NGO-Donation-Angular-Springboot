@@ -5,5 +5,3 @@ public enum Status {
     FULFILLED,
     ENDED
 }
-
-

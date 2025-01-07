@@ -49,4 +49,11 @@ public class CampaignServiceImpl implements CampaignService {
     public List<CampaignEntity> updateCampaignStatus(Integer campaignId) {
         return List.of();
     }
+
+    @Override
+    public void updateCampaignFundRaised(double amount, int campaignId) {
+        campaignRepository.updateFundRaised(amount, campaignId);
+    }
+
+
 }

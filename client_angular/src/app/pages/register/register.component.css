@@ -73,6 +73,13 @@ button:hover {
     background-color: #ff6b6b; /* Darker shade on hover */
 }
 
+.link {
+    width: max-content;
+    margin: auto;
+    color: #ff6b6b;
+    text-decoration: none;
+}
+
 @media (max-width: 600px) {
     .registrationPage {
         padding: 15px; /* Adjust padding for smaller screens */

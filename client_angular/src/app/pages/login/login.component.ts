@@ -8,6 +8,7 @@
   import { MatButtonModule } from '@angular/material/button';
   import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
   import {MatIconModule} from '@angular/material/icon';
+import { RouterLink } from '@angular/router';
 
   @Component({
     selector: 'app-login',
@@ -15,7 +16,7 @@
     imports: [FormsModule, JsonPipe, NgIf, MatInputModule,
     MatFormFieldModule,
     MatButtonModule,
-    MatProgressSpinnerModule, MatIconModule], 
+    MatProgressSpinnerModule, MatIconModule, RouterLink], 
     templateUrl: './login.component.html',
     styleUrl: './login.component.css'
   })

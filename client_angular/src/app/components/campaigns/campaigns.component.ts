@@ -4,18 +4,6 @@ import { CommonModule, DatePipe, JsonPipe, NgFor, NgIf } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { UserService } from '../../services/user.service';
 
-export interface Campaign {
-    campaignId: number;
-    title: string;
-    description: string;
-    fundRaised: string;
-    targetAmount: string;
-    startDate: string;
-    endDate: string;
-    status: 'ACTIVE' | 'FULFILLED' | 'ENDED';
-    icon?: string;
-}
-
 @Component({
   selector: 'app-campaigns',
   standalone: true,

@@ -1,0 +1,86 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+}
+.main-container {
+    padding: 20px;
+}
+.donors-container {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    overflow: hidden;
+    margin-top: 80px;
+
+}
+.donors-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #ff6b6b;
+    color: white;
+    padding: 20px;
+    border-radius: 10px 10px 0 0;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    font-family: 'Arial', sans-serif;
+}
+
+
+.total-donation-badge {
+    background-color: rgba(255, 255, 255, 0.2);
+    padding: 10px 15px;
+    border-radius: 25px;
+    font-size: 1.2em;
+    font-weight: bold;
+    min-width: 200px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease;
+}
+
+.total-donation-badge:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+.total-label {
+    font-size: 0.7em;
+    margin-right: 10px;
+    opacity: 0.8;
+    display: block;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.total-amount {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.donors-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+.donors-table th {
+    background-color: #ff6b6b;
+    color: white;
+    padding: 12px;
+    text-align: left;
+    font-weight: bold;
+}
+.donors-table td {
+    padding: 12px;
+    border-bottom: 1px solid #eee;
+}
+.donors-table tr:nth-child(even) {
+    background-color: #fff0f0;
+}
+.donors-table tr:hover {
+    background-color: #ffe5e5;
+}
+.donors-header-text {
+    font-weight: bold;
+    font-size: 1.8em;
+}

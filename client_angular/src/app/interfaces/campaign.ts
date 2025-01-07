@@ -8,4 +8,5 @@ export interface Campaign {
     endDate: string;
     status: 'ACTIVE' | 'FULFILLED' | 'ENDED';
     icon?: string;
-}
+  }
+  

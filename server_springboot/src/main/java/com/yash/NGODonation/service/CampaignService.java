@@ -62,4 +62,6 @@ public interface CampaignService {
      * @return the updated campaign entity
      */
     List<CampaignEntity> updateCampaignStatus(Integer campaignId);
+
+    void updateCampaignFundRaised(double amount, int campaignId);
 }

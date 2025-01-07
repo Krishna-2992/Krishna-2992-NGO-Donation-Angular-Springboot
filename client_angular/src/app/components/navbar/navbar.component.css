@@ -1,10 +1,13 @@
+* {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
 .navbar {
     display: flex;
     background-color: #fff;
     justify-content: space-around;
     align-items: center;
     height: 10vh;
-    color: #ff6b6b
+    color: #ff6b6b;
 }
 .buttons {
     display: flex; 
@@ -14,15 +17,33 @@
 }
 .button {
     background: transparent;
-    color: #FF6B6B;
-    margin: 8px;
-    padding: 0.5rem 1.5rem;
-    border: 2px solid #FF6B6B;
-    border-radius: 25px;
+    color: #555;
     font-weight: 500;
+    margin: 8px;
+    padding: 0.6rem 1.5rem;
+    border-radius: 25px;
     transition: all 0.3s;
     text-decoration: none;
 }
 .button:hover {
     background: #FFE3E3;
+    color: #ff6b6b;
+}
+#login-btn {
+    border: 2px solid #FF6B6B;
+}
+#register-btn, #logout-btn {
+    background-color: #FF6B6B;
+    border: 2px solid #FF6B6B;
+}
+#register-btn:hover, #logout-btn:hover {
+    background-color: #fff;
+    border: 2px solid #FF6B6B;
+}
+#username {
+    background-color: #FF9999;
+    padding: 0.6rem 1.5rem;
+    border-radius: 10px;
+    font-weight: 600;
+    color: #555;
 }

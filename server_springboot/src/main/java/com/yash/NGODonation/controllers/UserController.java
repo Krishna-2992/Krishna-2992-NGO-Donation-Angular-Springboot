@@ -16,8 +16,11 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/users")
-@CrossOrigin(origins = "*")
-public class UserController {
+@CrossOrigin(
+        origins = "http://localhost:4200",
+        allowedHeaders = "*",
+        methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE}
+)public class UserController {
 
     @Autowired
     public UserService userService;
@@ -70,6 +73,11 @@ public class UserController {
     @PostMapping("/login")
     public ResponseEntity<UserEntity> loginUser(@RequestBody UserEntity loginUser) {
         Optional<UserEntity> user = userService.loginUser(loginUser.getLoginName(), loginUser.getPassword());
-        return user.map(userEntity -> new ResponseEntity<>(userEntity, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.UNAUTHORIZED));
+        System.out.println(loginUser.getPassword());
+        System.out.println(loginUser.getLoginName());
+        UserEntity user1=user.get();
+        System.out.println(user1.getUserId());
+        return user.map(userEntity -> new ResponseEntity<>(userEntity, HttpStatus.OK))
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.UNAUTHORIZED));
     }
 }

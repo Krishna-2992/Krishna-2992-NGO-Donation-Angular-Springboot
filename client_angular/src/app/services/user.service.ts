@@ -5,6 +5,7 @@ import { map, catchError } from 'rxjs/operators';
 import { User } from '../interfaces/user';
 import { LoginUser } from '../interfaces/login-user';
 import { Router } from '@angular/router';
+import { headers } from '../../../constants';
 
 @Injectable({
   providedIn: 'root'
@@ -91,7 +92,7 @@ export class UserService {
     return this.http.post<User>(
       `${this.url}/login`, 
       loginUser, 
-      { observe: 'response' }
+      { observe: 'response', headers }
     );
   }
   
@@ -106,7 +107,7 @@ export class UserService {
       password: user.password,
       role: user.role,
       panNumber: user.panNumber
-    });
+    }, {headers});
   }
 
   getUser(): User {

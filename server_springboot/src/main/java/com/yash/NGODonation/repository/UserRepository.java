@@ -14,4 +14,7 @@ public interface UserRepository extends JpaRepository<UserEntity, Integer> {
     @Query("SELECT u FROM UserEntity u WHERE u.loginName = :loginName AND u.password = :password")
     Optional<UserEntity> findByUsernameAndPassword(@Param("loginName") String loginName, @Param("password") String password);
 
+    Optional<UserEntity> findByloginNameAndPassword(String loginName, String rawPassword);
+
+//    Optional<UserEntity> findByLoginName(String loginName);
 }

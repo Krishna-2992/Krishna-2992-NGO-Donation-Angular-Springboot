@@ -14,7 +14,20 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/campaigns")
-@CrossOrigin(origins = "*")
+@CrossOrigin(
+        origins = "http://localhost:4200",
+        allowedHeaders = "*",
+        methods = {
+                RequestMethod.GET,
+                RequestMethod.POST,
+                RequestMethod.PUT,
+                RequestMethod.DELETE,
+                RequestMethod.OPTIONS,
+                RequestMethod.PATCH
+        },
+        allowCredentials = "true",
+        maxAge = 3600
+)
 public class CampaignController {
     @Autowired
     private CampaignService campaignService;

@@ -93,7 +93,7 @@ export class UserService {
       `${this.url}/login`, 
       loginUser, 
       { observe: 'response', 
-        withCredentials: true
+        headers
        }
     );
   }
@@ -109,7 +109,7 @@ export class UserService {
       password: user.password,
       role: user.role,
       panNumber: user.panNumber
-    }, {withCredentials: true});
+    }, {headers});
   }
 
   getUser(): User {

@@ -1,9 +1,10 @@
 import { Injectable, signal } from '@angular/core';
 import { Campaign } from '../interfaces/campaign';
-import { HttpClient, HttpErrorResponse, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Observable, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
+import { headers } from '../../../constants';
 
 @Injectable({
   providedIn: 'root'
@@ -28,7 +29,7 @@ export class CampaignService {
         "status": campaign.status,
         "icon": campaign.icon
       }, 
-      { withCredentials: true }
+      { headers }
     );
   }
 
@@ -37,7 +38,7 @@ export class CampaignService {
     return this.http.get<Campaign>(
       `${this.url}/${campaignId}`,
       {
-        withCredentials: true,
+        headers,
         observe: 'response'
       }
     ).pipe(
@@ -57,11 +58,12 @@ export class CampaignService {
 
   getCampaignList(): Observable<boolean> {
     console.log("fetching campaigns");
+    
     return this.http.get<Campaign[]>(
       `${this.url}`,
       {
-        withCredentials: true,
-        observe: 'response'
+        observe: 'response', 
+        headers
       }
     ).pipe(
       map((response: HttpResponse<Campaign[]>) => {
@@ -87,7 +89,7 @@ export class CampaignService {
     return this.http.patch(
       `${this.url}?campaignId=${campaignId}&amount=${amount}`,
       {},  // Empty body object
-      { withCredentials: true }  
+      { headers }  
     ).pipe(
       catchError(this.handleError)
     );

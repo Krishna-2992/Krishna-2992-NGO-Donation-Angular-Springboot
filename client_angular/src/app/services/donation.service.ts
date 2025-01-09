@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { catchError, map, Observable, throwError } from 'rxjs';
 import { UserService } from './user.service';
 import { convertTimestampToLocalDate } from '../utils/dateUtils';
+import { headers } from '../../../constants';
 
 @Injectable({
   providedIn: 'root'
@@ -22,18 +23,24 @@ export class DonationService {
 
    // Add this method for creating Razorpay order
    createOrder(amount: number): Observable<any> {
-    return this.http.get(`${this.paymentUrl}/create-order?amount=${amount}`, {withCredentials: true});
+    return this.http.get(`${this.paymentUrl}/create-order?amount=${amount}`, {headers});
   }
 
   // Add this method for verifying payment
   verifyPayment(paymentData: any): Observable<any> {
-    const headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
+    const username = 'user';
+    const password = 'password';
+    const authHeader = 'Basic ' + btoa(username + ':' + password);
+
+    const headers = new HttpHeaders()
+    .set('Authorization', authHeader)
+    .set('Content-Type', 'application/x-www-form-urlencoded');
     const body = new URLSearchParams();
     body.set('razorpay_payment_id', paymentData.razorpay_payment_id);
     body.set('razorpay_order_id', paymentData.razorpay_order_id);
     body.set('razorpay_signature', paymentData.razorpay_signature);
 
-    return this.http.post(`${this.paymentUrl}/verify`, body.toString(), { headers, withCredentials: true });
+    return this.http.post(`${this.paymentUrl}/verify`, body.toString(), { headers });
   }
 
   // Modify addDonation to handle payment first
@@ -68,13 +75,13 @@ export class DonationService {
       "amount": donation.amount,
       "campaignId": donation.campaignId,
       "donationDate": donation.donationDate
-    }, {withCredentials: true});
+    }, {headers});
   }
 
   getDonationList(): Observable<boolean> {
     const donationList = this.http.get<Donation[]>(
       `${this.donationUrl}`, 
-      {observe: 'response', withCredentials: true}
+      {observe: 'response', headers}
     )
     console.log(donationList)
     return donationList.pipe(

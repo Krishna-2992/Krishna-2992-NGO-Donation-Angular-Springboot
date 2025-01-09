@@ -137,7 +137,7 @@ export class CampaignComponent implements OnInit {
                   this.router.navigate(['/userDashboard']);
                 },
                 error: (errorMessage: string) => {
-                  alert("Donation recorded but campaign update failed: " + errorMessage);
+                  this.router.navigate(['/userDashboard']);
                 }
               });
             },

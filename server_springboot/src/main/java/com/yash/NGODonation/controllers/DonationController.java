@@ -3,6 +3,8 @@ package com.yash.NGODonation.controllers;
 import com.yash.NGODonation.entity.DonationEntity;
 import com.yash.NGODonation.service.DonationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,14 +17,15 @@ public class DonationController {
     public DonationService donationService;
 
     @PostMapping
-    public DonationEntity createDonation(@RequestBody DonationEntity donation) {
+    public ResponseEntity<DonationEntity> createDonation(@RequestBody DonationEntity donation) {
         System.out.println("----Create donation----");
         System.out.println(donation);
-        return donationService.addDonation(donation);
+        DonationEntity donationEntity = donationService.addDonation(donation);
+        return new ResponseEntity<>(donationEntity, HttpStatus.OK);
     }
 
     @GetMapping
-    public List<DonationEntity> getAllDonations() {
-        return donationService.getAllDoantion();
+    public ResponseEntity<List<DonationEntity>> getAllDonations() {
+        return new ResponseEntity<>(donationService.getAllDoantion(), HttpStatus.OK);
     }
 }

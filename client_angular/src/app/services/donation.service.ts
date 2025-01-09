@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { catchError, map, Observable, throwError } from 'rxjs';
 import { UserService } from './user.service';
 import { convertTimestampToLocalDate } from '../utils/dateUtils';
-import { headers } from '../../../constants';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -22,7 +22,7 @@ export class DonationService {
 
    // Add this method for creating Razorpay order
    createOrder(amount: number): Observable<any> {
-    return this.http.get(`${this.paymentUrl}/create-order?amount=${amount}`);
+    return this.http.get(`${this.paymentUrl}/create-order?amount=${amount}`, {withCredentials: true});
   }
 
   // Add this method for verifying payment
@@ -33,7 +33,7 @@ export class DonationService {
     body.set('razorpay_order_id', paymentData.razorpay_order_id);
     body.set('razorpay_signature', paymentData.razorpay_signature);
 
-    return this.http.post(`${this.paymentUrl}/verify`, body.toString(), { headers });
+    return this.http.post(`${this.paymentUrl}/verify`, body.toString(), { headers, withCredentials: true });
   }
 
   // Modify addDonation to handle payment first
@@ -68,13 +68,13 @@ export class DonationService {
       "amount": donation.amount,
       "campaignId": donation.campaignId,
       "donationDate": donation.donationDate
-    });
+    }, {withCredentials: true});
   }
 
   getDonationList(): Observable<boolean> {
     const donationList = this.http.get<Donation[]>(
       `${this.donationUrl}`, 
-      {observe: 'response'}
+      {observe: 'response', withCredentials: true}
     )
     console.log(donationList)
     return donationList.pipe(

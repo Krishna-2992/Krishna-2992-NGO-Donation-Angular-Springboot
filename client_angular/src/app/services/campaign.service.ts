@@ -4,7 +4,6 @@ import { HttpClient, HttpErrorResponse, HttpResponse } from '@angular/common/htt
 import { Router } from '@angular/router';
 import { Observable, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
-import { headers } from '../../../constants';
 
 @Injectable({
   providedIn: 'root'
@@ -29,7 +28,7 @@ export class CampaignService {
         "status": campaign.status,
         "icon": campaign.icon
       }, 
-      { headers }
+      { withCredentials: true }
     );
   }
 
@@ -38,7 +37,7 @@ export class CampaignService {
     return this.http.get<Campaign>(
       `${this.url}/${campaignId}`,
       {
-        headers,
+        withCredentials: true,
         observe: 'response'
       }
     ).pipe(
@@ -61,7 +60,7 @@ export class CampaignService {
     return this.http.get<Campaign[]>(
       `${this.url}`,
       {
-        headers,
+        withCredentials: true,
         observe: 'response'
       }
     ).pipe(
@@ -88,7 +87,7 @@ export class CampaignService {
     return this.http.patch(
       `${this.url}?campaignId=${campaignId}&amount=${amount}`,
       {},  // Empty body object
-      { headers }  // Include headers as part of the options object
+      { withCredentials: true }  
     ).pipe(
       catchError(this.handleError)
     );

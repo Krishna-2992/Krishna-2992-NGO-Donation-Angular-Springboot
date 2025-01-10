@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import javax.swing.text.html.Option;
 import java.sql.SQLIntegrityConstraintViolationException;
@@ -24,6 +26,15 @@ import java.util.Optional;
 
     @Autowired
     public UserService userService;
+
+    @GetMapping("/me")
+    public ResponseEntity<UserEntity> authenticatedUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        UserEntity currentUser = (UserEntity) authentication.getPrincipal();
+
+        return ResponseEntity.ok(currentUser);
+    }
 
     @GetMapping
     public List<UserEntity> getAllUsers() {

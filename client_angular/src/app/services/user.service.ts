@@ -25,6 +25,7 @@ export class UserService {
   });
   
   private url = "http://localhost:8080/users"
+  private authUrl = "http://localhost:8080/auth"
 
   constructor(private http: HttpClient, private router: Router) { }
 

@@ -6,6 +6,7 @@ import { User } from '../interfaces/user';
 import { LoginUser } from '../interfaces/login-user';
 import { Router } from '@angular/router';
 import { headers } from '../../../constants';
+import { Auth } from '../interfaces/auth';
 
 @Injectable({
   providedIn: 'root'
@@ -31,13 +32,13 @@ export class UserService {
 
   loginUser(loginUser: LoginUser): Observable<boolean> {
     console.log("UserService -> loginUser");
-    console.log('get user data: ',  this.getUserData(loginUser))
     return this.getUserData(loginUser).pipe(
-      map((response: HttpResponse<User>) => {
+      map((response: HttpResponse<Auth>) => {
         if (response.status === 200 && response.body) {
           console.log("Login successful - Status: 200");
-          localStorage.setItem("user", JSON.stringify(response.body));
-          this.user.set(response.body);
+          localStorage.setItem("auth", JSON.stringify(response.body))
+          // localStorage.setItem("user", JSON.stringify(response.body));
+          // this.user.set(response.body);
           this.router.navigate(['/userDashboard']);
           return true;
         }
@@ -89,19 +90,17 @@ export class UserService {
     this.router.navigate(['/']);
   }
 
-  getUserData(loginUser: LoginUser): Observable<HttpResponse<User>> {
-    return this.http.post<User>(
-      `${this.url}/login`, 
+  getUserData(loginUser: LoginUser): Observable<HttpResponse<Auth>> {
+    return this.http.post<Auth>(
+      `${this.authUrl}/login`, 
       loginUser, 
-      { observe: 'response', 
-        headers
-       }
+      { observe: 'response' }
     );
   }
   
   setUserData(user: User): Observable<any> {
     console.log("registered user: ", user);
-    return this.http.post(`${this.url}`, {
+    return this.http.post(`${this.authUrl}/signup`, {
       name: user.name,
       phone: user.phone,
       email: user.email,
@@ -110,7 +109,7 @@ export class UserService {
       password: user.password,
       role: user.role,
       panNumber: user.panNumber
-    }, {headers});
+    }, {});
   }
 
   getUser(): User {

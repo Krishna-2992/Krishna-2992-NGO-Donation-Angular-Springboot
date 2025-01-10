@@ -5,14 +5,16 @@ import com.yash.NGODonation.entity.UserEntity;
 import com.yash.NGODonation.service.AuthenticationService;
 import com.yash.NGODonation.service.JwtService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 @RestController
 @RequestMapping("/auth")
+@CrossOrigin(
+        origins = "http://localhost:4200",
+        allowedHeaders = "*",
+        methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE}
+)
 public class AuthenticationController {
     private final JwtService jwtService;
 

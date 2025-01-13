@@ -17,6 +17,12 @@ export class CampaignService {
   constructor(private http: HttpClient, private router: Router) {}
 
   addCampaign(campaign: Campaign): Observable<any> {
+    const token = JSON.parse(localStorage.getItem("auth") ?? "{}").token;
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    })
+
     return this.http.post(
       `${this.url}`, 
       {
@@ -38,8 +44,8 @@ export class CampaignService {
     return this.http.get<Campaign>(
       `${this.url}/${campaignId}`,
       {
-        headers,
-        observe: 'response'
+        observe: 'response', 
+        withCredentials: true
       }
     ).pipe(
       map((response: HttpResponse<Campaign>) => {
@@ -63,7 +69,7 @@ export class CampaignService {
       `${this.url}`,
       {
         observe: 'response', 
-        headers
+        withCredentials: true
       }
     ).pipe(
       map((response: HttpResponse<Campaign[]>) => {
@@ -86,6 +92,12 @@ export class CampaignService {
 
   updateCampaignFundRaised(amount: number, campaignId: number): Observable<any> {
     console.log("updating campaign fund raised: ", amount, " ", campaignId);
+    const token = JSON.parse(localStorage.getItem("auth") ?? "{}").token;
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    })
+
     return this.http.patch(
       `${this.url}?campaignId=${campaignId}&amount=${amount}`,
       {},  // Empty body object

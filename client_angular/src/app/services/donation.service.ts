@@ -16,13 +16,18 @@ export class DonationService {
   donation = signal<Donation | undefined>;
 
   private donationUrl = "http://localhost:8080/donations"
-  private campaignUrl = "http://localhost:8080/campaigns"
   private paymentUrl = "http://localhost:8080/payment";
 
   constructor(private http: HttpClient, private router: Router, private userService: UserService) { }
 
    // Add this method for creating Razorpay order
    createOrder(amount: number): Observable<any> {
+    const token = JSON.parse(localStorage.getItem("auth") ?? "{}").token;
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    })
+
     return this.http.get(`${this.paymentUrl}/create-order?amount=${amount}`, {headers});
   }
 
@@ -31,9 +36,10 @@ export class DonationService {
     const username = 'user';
     const password = 'password';
     const authHeader = 'Basic ' + btoa(username + ':' + password);
+    const token = JSON.parse(localStorage.getItem("auth") ?? "{}").token;
 
     const headers = new HttpHeaders()
-    .set('Authorization', authHeader)
+    .set('Authorization', `Bearer ${token}`)
     .set('Content-Type', 'application/x-www-form-urlencoded');
     const body = new URLSearchParams();
     body.set('razorpay_payment_id', paymentData.razorpay_payment_id);
@@ -69,6 +75,12 @@ export class DonationService {
 
   // Your existing methods remain the same
   setDonationData(donation: Donation): Observable<any> {
+    const token = JSON.parse(localStorage.getItem("auth") ?? "{}").token;
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    })
+
     console.log("add donation: ", donation);
     return this.http.post(`${this.donationUrl}`, {
       "donorId": donation.donorId,
@@ -79,6 +91,12 @@ export class DonationService {
   }
 
   getDonationList(): Observable<boolean> {
+    const token = JSON.parse(localStorage.getItem("auth") ?? "{}").token;
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    })
+
     const donationList = this.http.get<Donation[]>(
       `${this.donationUrl}`, 
       {observe: 'response', headers}

@@ -1,4 +1,4 @@
-import { HttpClient, HttpErrorResponse, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaderResponse, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Injectable, signal } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
@@ -32,13 +32,22 @@ export class UserService {
 
   loginUser(loginUser: LoginUser): Observable<boolean> {
     console.log("UserService -> loginUser");
-    return this.getUserData(loginUser).pipe(
-      map((response: HttpResponse<Auth>) => {
+    this.getAuthToken(loginUser).subscribe({
+      next: (response: Auth) => {
+        console.log('inside auth token: ', response)
+        localStorage.setItem("auth", JSON.stringify(response))
+      },
+      error: (errorMessage: string) => {
+        console.log("invalid credentials")
+      }
+    });
+
+    return this.getUserData().pipe(
+      map((response: HttpResponse<User>) => {
         if (response.status === 200 && response.body) {
           console.log("Login successful - Status: 200");
-          localStorage.setItem("auth", JSON.stringify(response.body))
-          // localStorage.setItem("user", JSON.stringify(response.body));
-          // this.user.set(response.body);
+          localStorage.setItem("user", JSON.stringify(response.body));
+          this.user.set(response.body);
           this.router.navigate(['/userDashboard']);
           return true;
         }
@@ -90,11 +99,27 @@ export class UserService {
     this.router.navigate(['/']);
   }
 
-  getUserData(loginUser: LoginUser): Observable<HttpResponse<Auth>> {
+  getAuthToken(loginUser: LoginUser): Observable<Auth> {
     return this.http.post<Auth>(
       `${this.authUrl}/login`, 
       loginUser, 
-      { observe: 'response' }
+    );
+  }
+
+  getUserData(): Observable<HttpResponse<User>> {
+    console.log(JSON.parse(localStorage.getItem("auth") ?? "{}").token)
+    
+    const token = JSON.parse(localStorage.getItem("auth") ?? "{}").token;
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    })
+
+
+    console.log("auth header: ", headers)
+    return this.http.get<User>(
+      `${this.url}/me`,
+      { observe: 'response', headers}
     );
   }
   
